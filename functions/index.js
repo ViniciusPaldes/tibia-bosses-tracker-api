@@ -2,16 +2,10 @@
 const express = require('express');
 const axios = require('axios');
 const cheerio = require('cheerio');
-const puppeteer = require('puppeteer');
 
 // Create an instance of the Express application
 const app = express();
 const port = process.env.PORT || 3000; // Choose any port number you prefer
-
-// Define a route
-app.get('/', (req, res) => {
-  res.send('Hello, world!');
-});
 
 const cleanText = (text) => {
   return text.replace(/\n/g, '').replace(/days? ago/g, '').trim();
@@ -55,43 +49,6 @@ const getBossList = async () => {
   }
 };
 
-
-
-app.get('/sima-check-crawler', (req, res) => {
-  const targetWorld = 'Venebra';
-
-  (async () => {
-    // Launch a headless Chrome browser
-    console.log("Pre browser")
-    const browser = await puppeteer.launch();
-    console.log("Post browser")
-
-    // Create a new page
-    const page = await browser.newPage();
-
-    // Navigate to the filter page
-    await page.goto('https://www.simacheck.com/filter.html');
-
-    // Select the Venebra option in the dropdown
-    await page.select('select[name="world"]', targetWorld);
-
-    // Click the Enviar button to submit the form
-    await Promise.all([
-      page.waitForNavigation(),
-      page.click('button[type="submit"]'),
-    ]);
-
-    // Wait for the desired page to load
-    await page.waitForSelector('section.sessao_dois');
-
-    // Extract the HTML content
-    const htmlContent = await page.content();
-
-    res.send(htmlContent)
-    // Close the browser
-    await browser.close();
-  });
-});
 
 app.get('/tibia-statistics', async (req, res) => {
   try {
