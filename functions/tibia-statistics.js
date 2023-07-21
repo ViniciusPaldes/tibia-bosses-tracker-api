@@ -48,8 +48,6 @@ const getBossList = async () => {
 const handler = async (event, context) => {
     try {
         const bossList = await getBossList();
-        console.log("bossList", bossList)
-        res.json(bossList);
         return {
             statusCode: 200,
             body: JSON.stringify(bossList),
