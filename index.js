@@ -6,7 +6,7 @@ const puppeteer = require('puppeteer');
 
 // Create an instance of the Express application
 const app = express();
-const port = 3000; // Choose any port number you prefer
+const port = process.env.PORT || 3000; // Choose any port number you prefer
 
 // Define a route
 app.get('/', (req, res) => {
