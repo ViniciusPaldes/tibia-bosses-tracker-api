@@ -1,2 +1,2 @@
 [build]
-  functions = "api"  # Path to your serverless functions directory
+  functions = "functions"  # Path to your serverless functions directory
