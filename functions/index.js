@@ -110,3 +110,8 @@ app.get('/tibia-statistics', async (req, res) => {
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
+
+// Export the serverless function
+exports.handler = async (event, context) => {
+  return app;
+};
