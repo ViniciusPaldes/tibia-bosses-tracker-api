@@ -1,0 +1,3 @@
+[build]
+  command = "yarn build" # Replace with your build command if needed
+  functions = "api"  # Path to your serverless functions directory
