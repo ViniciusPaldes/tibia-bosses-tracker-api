@@ -2,6 +2,7 @@
 const express = require('express');
 const axios = require('axios');
 const cheerio = require('cheerio');
+const moment = require('moment');
 
 // Create an instance of the Express application
 const app = express();
@@ -28,8 +29,8 @@ const getKilledYesterday = async () => {
   }
 };
 
-    
-const getBossList = async () => {
+
+const getBossListKillStatistic = async () => {
   try {
     const url = 'https://www.tibia-statistic.com/bosshunter/details/venebra';
     const response = await axios.get(url);
@@ -83,6 +84,7 @@ async function getGuildStatsBossList() {
       const lastSeen = $(element).find('td:nth-child(8)').text().trim();
       const chanceText = $(element).find('td:nth-child(11)').text().trim();
       const expectedIn = $(element).find('td:nth-child(12)').text().trim();
+
       let chance = chanceText;
 
       // Handle 'No' and '1Low' cases
@@ -110,10 +112,60 @@ async function getGuildStatsBossList() {
   }
 }
 
+async function getDuplicatedBosses(url) {
+  try {
+    const url = 'https://www.tibiabosses.com/stats/?world=Venebra&mode=3';
+
+    const response = await axios.get(url);
+    const $ = cheerio.load(response.data);
+
+    const bosses = [
+      { name: 'White Pale', cities: ['Edron', 'Darashia', 'Liberty Bay'], count: 3 },
+      { name: 'Rotworm Queen', cities: ["Darashia", "Ab'dendriel", "Edron", "Liberty Bay"], count: 4 },
+    ];
+
+    const result = [];
+
+    bosses.forEach((boss) => {
+      const bossDiv = $(`img[alt="${boss.name}"]`).parent();
+      const cityDivs = bossDiv.nextAll().slice(0, boss.count);
+
+      cityDivs.each((index, el) => {
+        const city = boss.cities[index];
+        const lastSeen = $(el).text().trim();
+        const chanceDiv = $(el).next();
+        // Get the chance value based on the color
+        let chanceText = chanceDiv.css('color');
+        let chances = 0;
+
+        if (chanceText === 'green') {
+          chances = 1;
+        } else if (chanceText === 'blue') {
+          chances = 0.01;
+        } else {
+          chances = 0;
+        }
+
+        result.push({ name: boss.name, city: city, lastSeen: lastSeen, chance: chances });
+
+      });
+    });
+
+    return result;
+  } catch (error) {
+    console.error('Error fetching data:', error.message);
+    return [];
+  }
+}
+
+
+
+
+
 
 app.get('/tibia-statistics', async (req, res) => {
   try {
-    const bossList = await getBossList();
+    const bossList = await getBossListKillStatistic();
     res.json(bossList);
   } catch (error) {
     console.error('Error:', error);
@@ -134,6 +186,16 @@ app.get('/killed-yesterday', async (req, res) => {
 app.get('/guild-stats', async (req, res) => {
   try {
     const bossList = await getGuildStatsBossList();
+    res.json(bossList);
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.get('/duplicated-bosses', async (req, res) => {
+  try {
+    const bossList = await getDuplicatedBosses();
     res.json(bossList);
   } catch (error) {
     console.error('Error:', error);
