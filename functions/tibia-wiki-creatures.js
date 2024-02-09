@@ -25,10 +25,11 @@ async function fetchTibiaWikiCreaturesData(url) {
   try {
     // Fetch the HTML of the page
     const { data } = await axios.get(url, {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
-        }
-      });
+      headers: {
+        Accept:
+          "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+      },
+    });
     const $ = cheerio.load(data);
 
     const URL_PREFIX = "https://www.tibiawiki.com.br";
@@ -107,7 +108,7 @@ async function getTopTrumps() {
 const handler = async (event, context) => {
   try {
     const data = await getTopTrumps();
-    console.log("Data returned from top trumps", data)
+    console.log("Data returned from top trumps", data);
     return {
       statusCode: 200,
       headers: {
