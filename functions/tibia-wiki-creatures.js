@@ -103,13 +103,14 @@ async function getTopTrumps() {
 const handler = async (event, context) => {
   try {
     const data = await getTopTrumps();
+    console.log("Data returned from top trumps", data)
     return {
       statusCode: 200,
       headers: {
         "Access-Control-Allow-Origin": "*", // Allow requests from any origin
         "Access-Control-Allow-Headers": "Content-Type",
       },
-      body: JSON.stringify([{nome: 1, algo: 2}]),
+      body: JSON.stringify(data),
     };
   } catch (error) {
     console.error("Error:", error);
