@@ -24,7 +24,7 @@ function getDifficultyNumber(difficultyString) {
 async function fetchTibiaWikiCreaturesData(url) {
   try {
     // Fetch the HTML of the page
-    const { data } = await axios.get(url);
+    const { data } = await axios.get(`https://cors-anywhere.herokuapp.com/${url}`);
     const $ = cheerio.load(data);
 
     const URL_PREFIX = "https://www.tibiawiki.com.br";
