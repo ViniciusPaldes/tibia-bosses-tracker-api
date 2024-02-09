@@ -109,7 +109,7 @@ const handler = async (event, context) => {
         "Access-Control-Allow-Origin": "*", // Allow requests from any origin
         "Access-Control-Allow-Headers": "Content-Type",
       },
-      body: data,
+      body: JSON.stringify(data),
     };
   } catch (error) {
     console.error("Error:", error);
