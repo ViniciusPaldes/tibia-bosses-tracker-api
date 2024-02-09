@@ -24,7 +24,11 @@ function getDifficultyNumber(difficultyString) {
 async function fetchTibiaWikiCreaturesData(url) {
   try {
     // Fetch the HTML of the page
-    const { data } = await axios.get(url);
+    const { data } = await axios.get(url, {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+        }
+      });
     const $ = cheerio.load(data);
 
     const URL_PREFIX = "https://www.tibiawiki.com.br";
@@ -69,26 +73,26 @@ async function fetchTibiaWikiCreaturesData(url) {
 
 async function getTopTrumps() {
   const urls = [
-    { url: "http://www.tibiawiki.com.br/wiki/Anf%C3%ADbios" },
-    { url: "http://www.tibiawiki.com.br/wiki/Aqu%C3%A1ticos" },
-    { url: "http://www.tibiawiki.com.br/wiki/Aves" },
-    { url: "http://www.tibiawiki.com.br/wiki/Constructos" },
-    { url: "http://www.tibiawiki.com.br/wiki/Criaturas_M%C3%A1gicas" },
-    { url: "http://www.tibiawiki.com.br/wiki/Dem%C3%B4nios" },
-    { url: "http://www.tibiawiki.com.br/wiki/Drag%C3%B5es" },
-    { url: "http://www.tibiawiki.com.br/wiki/Elementais" },
-    { url: "http://www.tibiawiki.com.br/wiki/Extra_Dimensionais" },
-    { url: "http://www.tibiawiki.com.br/wiki/Fadas" },
-    { url: "http://www.tibiawiki.com.br/wiki/Gigantes" },
-    { url: "http://www.tibiawiki.com.br/wiki/Humanos" },
-    { url: "http://www.tibiawiki.com.br/wiki/Human%C3%B3ides" },
-    { url: "http://www.tibiawiki.com.br/wiki/Licantropos" },
-    { url: "http://www.tibiawiki.com.br/wiki/Mam%C3%ADferos" },
-    { url: "http://www.tibiawiki.com.br/wiki/Mortos-Vivos" },
-    { url: "http://www.tibiawiki.com.br/wiki/Plantas_(Criatura)" },
-    { url: "http://www.tibiawiki.com.br/wiki/R%C3%A9pteis" },
-    { url: "http://www.tibiawiki.com.br/wiki/Slimes" },
-    { url: "http://www.tibiawiki.com.br/wiki/Vermes" },
+    { url: "https://www.tibiawiki.com.br/wiki/Anf%C3%ADbios" },
+    { url: "https://www.tibiawiki.com.br/wiki/Aqu%C3%A1ticos" },
+    { url: "https://www.tibiawiki.com.br/wiki/Aves" },
+    { url: "https://www.tibiawiki.com.br/wiki/Constructos" },
+    { url: "https://www.tibiawiki.com.br/wiki/Criaturas_M%C3%A1gicas" },
+    { url: "https://www.tibiawiki.com.br/wiki/Dem%C3%B4nios" },
+    { url: "https://www.tibiawiki.com.br/wiki/Drag%C3%B5es" },
+    { url: "https://www.tibiawiki.com.br/wiki/Elementais" },
+    { url: "https://www.tibiawiki.com.br/wiki/Extra_Dimensionais" },
+    { url: "https://www.tibiawiki.com.br/wiki/Fadas" },
+    { url: "https://www.tibiawiki.com.br/wiki/Gigantes" },
+    { url: "https://www.tibiawiki.com.br/wiki/Humanos" },
+    { url: "https://www.tibiawiki.com.br/wiki/Human%C3%B3ides" },
+    { url: "https://www.tibiawiki.com.br/wiki/Licantropos" },
+    { url: "https://www.tibiawiki.com.br/wiki/Mam%C3%ADferos" },
+    { url: "https://www.tibiawiki.com.br/wiki/Mortos-Vivos" },
+    { url: "https://www.tibiawiki.com.br/wiki/Plantas_(Criatura)" },
+    { url: "https://www.tibiawiki.com.br/wiki/R%C3%A9pteis" },
+    { url: "https://www.tibiawiki.com.br/wiki/Slimes" },
+    { url: "https://www.tibiawiki.com.br/wiki/Vermes" },
   ];
 
   try {
