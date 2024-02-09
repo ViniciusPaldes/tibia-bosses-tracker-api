@@ -24,9 +24,9 @@ function getDifficultyNumber(difficultyString) {
 async function fetchTibiaWikiCreaturesData(url) {
   try {
     // Fetch the HTML of the page
-    const { data } = await axios.get(`https://cors-anywhere.herokuapp.com/${url}`);
-    const $ = cheerio.load(data);
-
+    const { data } = await axios.get('https://www.tibia-statistic.com/bosshunter/details/venebra');
+    // const $ = cheerio.load(data);
+    return [{name: 1, voice: 2}];
     const URL_PREFIX = "https://www.tibiawiki.com.br";
 
     // The array to hold our creatures data
