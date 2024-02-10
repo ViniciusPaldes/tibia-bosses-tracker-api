@@ -1,6 +1,6 @@
 // Import the required modules
-const axios = require("axios");
-const cheerio = require("cheerio");
+const axios = require('axios');
+const cheerio = require('cheerio');
 
 function getDifficultyNumber(difficultyString) {
   switch (difficultyString) {
@@ -24,39 +24,34 @@ function getDifficultyNumber(difficultyString) {
 async function fetchTibiaWikiCreaturesData(url) {
   try {
     // Fetch the HTML of the page
-    const { data } = await axios.get(`https://web.archive.org/web/20240201070048/${url}`);
+    const { data } = await axios.get(url);
     const $ = cheerio.load(data);
+
     const URL_PREFIX = "https://www.tibiawiki.com.br";
 
     // The array to hold our creatures data
     const creatures = [];
 
     // Find each table by ID and loop through its rows
-    $("table#tabelaDPL")
-      .first()
-      .each((_, table) => {
-        // Loop through each row of the table
-        $("tr", table).each((_, tr) => {
-          const tds = $("td", tr).filter(
-            (index, td) => index < $("td", tr).length - 1
-          );
-          if (tds.length > 0) {
-            // Ensure there are columns to process
-            const creature = {
-              name: $(tds[0]).text().trim(),
-              image: `${URL_PREFIX}${$(tds[1]).find("img").attr("src") || ""}`,
-              hp: parseInt($(tds[2]).text().trim(), 10),
-              xp: parseInt($(tds[3]).text().trim(), 10),
-              charms: parseInt($(tds[4]).text().trim(), 10),
-              difficultyString: $(tds[5]).find("img").attr("title"),
-              difficulty: getDifficultyNumber(
-                $(tds[5]).find("img").attr("title")
-              ),
-            };
-            creatures.push(creature);
-          }
-        });
+    $('table#tabelaDPL').first().each((_, table) => {
+      // Loop through each row of the table
+      $("tr", table).each((_, tr) => {
+        const tds = $("td", tr).filter((index, td) => index < $("td", tr).length - 1);
+        if (tds.length > 0) {
+          // Ensure there are columns to process
+          const creature = {
+            name: $(tds[0]).text().trim(),
+            image: `${URL_PREFIX}${$(tds[1]).find("img").attr("src") || ""}`,
+            hp: parseInt($(tds[2]).text().trim(), 10),
+            xp: parseInt($(tds[3]).text().trim(), 10),
+            charms: parseInt($(tds[4]).text().trim(), 10),
+            difficultyString: $(tds[5]).find("img").attr("title"),
+            difficulty: getDifficultyNumber($(tds[5]).find("img").attr("title")),
+          };
+          creatures.push(creature);
+        }
       });
+    });
 
     // Log or return the JSON data
     // console.log(JSON.stringify(creatures, null, 2));
@@ -66,7 +61,7 @@ async function fetchTibiaWikiCreaturesData(url) {
   }
 }
 
-async function getTopTrumps() {
+async function generateTopTrumps(save) {
   const urls = [
     { url: "https://www.tibiawiki.com.br/wiki/Anf%C3%ADbios" },
     { url: "https://www.tibiawiki.com.br/wiki/Aqu%C3%A1ticos" },
@@ -88,10 +83,10 @@ async function getTopTrumps() {
     { url: "https://www.tibiawiki.com.br/wiki/R%C3%A9pteis" },
     { url: "https://www.tibiawiki.com.br/wiki/Slimes" },
     { url: "https://www.tibiawiki.com.br/wiki/Vermes" },
-  ];
+  ]
 
   try {
-    const promises = urls.map((item) => fetchTibiaWikiCreaturesData(item.url));
+    const promises = urls.map(item => fetchTibiaWikiCreaturesData(item.url));
     const results = await Promise.all(promises);
     return results.flat();
   } catch (error) {
@@ -101,8 +96,7 @@ async function getTopTrumps() {
 
 const handler = async (event, context) => {
   try {
-    const data = await getTopTrumps();
-    console.log("Data returned from top trumps", data);
+    const data = await generateTopTrumps();
     return {
       statusCode: 200,
       headers: {
