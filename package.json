@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node api/index.js",
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -14,6 +15,8 @@
     "axios": "^1.4.0",
     "cheerio": "^1.0.0-rc.12",
     "express": "^4.18.2",
+    "firebase": "^10.8.0",
+    "firebase-admin": "^12.0.0",
     "moment": "^2.29.4",
     "netlify-lambda": "^2.0.16",
     "puppeteer": "^20.8.3"
