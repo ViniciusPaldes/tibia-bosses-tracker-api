@@ -1,24 +1,26 @@
-# Tibia Bosses Tracker API
+# Tibia HTML to JSON API
 
-This is a REST endpoint app written in Node, designed to track bosses in the MMORPG game, Tibia.
+This is a NodeJS with Express project, designed to run crawlers on Famous Tibia Webpages to transform HTML into GET endpoints.
 
-# Fundamentals
+## Base URL
 
-To reduce complexity, I created some crawlers that read from well-known Tibia Bosses trackers. The most reliable source at the moment is GuildStats, but there are also endpoints to gather data from other sources such as Tibia Bosses and Tibia-Statistics.
-
-## Limitations
-
-As this is a crawler and doesn't have a database, the crawler runs each time the endpoint is called. If the website is down, we cannot provide any probability data.
-
-## Data Source
-
-As mentioned above, the most reliable data source is Guild Stats. There is also Firebase integration to manage the bosses that this API can handle.
-
-The only database used is Firebase. The process involves merging base data from Firebase with data returned from GuildStats.
+https://checkboss-api.netlify.app/.netlify/functions
 
 ## Available Endpoints
 
-- `/guild-stats` - Current data source from GuildStats
-- `/tibia-statistics` - Data source from Tibia-Statistics
-- `/killed-yesterday` - Data on bosses killed yesterday from the official Tibia site
-- `/duplicated-bosses` - WIP (Work In Progress) for bosses with multiple respawns
+- `GET /tibiawiki-creatures` - Get all Tibia Creatures from TibiaWiki with Name, Image, HP, XP, Charms, Difficulty;
+- `GET /guild-stats` - Get Nemesis Bosses chances for Today from GuildStats for Venebra World;
+- `GET /tibia-statistics` - Same as above but using TibiaStatistics as data source;
+- `GET /killed-yesterday` - Bosses killed yesterday from the official Tibia website;
+- `GET /duplicated-bosses` - WIP (Work In Progress) for bosses with multiple respawns;
+
+## Limitations
+
+If the Data Source Website is down, we cannot provide any bosses probability data. The only Endpoint that will work in case of Source if OFF is `GET /tibiawiki-creatures`
+
+## Data Source for bosses
+
+The most reliable data source for bosses is Guild Stats, prefer to use it instead of TibiaStatistics.
+
+
+
