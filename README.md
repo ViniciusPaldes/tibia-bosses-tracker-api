@@ -4,11 +4,11 @@ This is a NodeJS with Express project, designed to run crawlers on Famous Tibia 
 
 ## Base URL
 
-https://checkboss-api.netlify.app/.netlify/functions
+https://tibia-html-to-json-api.netlify.app/.netlify/functions/
 
 ## Available Endpoints
 
-- `GET /tibiawiki-creatures` - Get all Tibia Creatures from TibiaWiki with Name, Image, HP, XP, Charms, Difficulty;
+- `GET /tibia-wiki-creatures` - Get all Tibia Creatures from TibiaWiki with Name, Image, HP, XP, Charms, Difficulty;
 - `GET /guild-stats` - Get Nemesis Bosses chances for Today from GuildStats for Venebra World;
 - `GET /tibia-statistics` - Same as above but using TibiaStatistics as data source;
 - `GET /killed-yesterday` - Bosses killed yesterday from the official Tibia website;
