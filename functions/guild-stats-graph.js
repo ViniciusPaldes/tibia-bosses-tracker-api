@@ -50,14 +50,14 @@ async function getGuildStatsGraph(boss) {
 const handler = async (event, context) => {
   try {
     const boss = event.path.split('/').pop();
-    // const graphData = await getGuildStatsGraph(boss);
+    const graphData = await getGuildStatsGraph(boss);
     return {
       statusCode: 200,
       headers: {
         "Access-Control-Allow-Origin": "*", // Allow requests from any origin
         "Access-Control-Allow-Headers": "Content-Type",
       },
-      body: JSON.stringify(boss),
+      body: JSON.stringify(graphData),
     };
   } catch (error) {
     console.error(error);
