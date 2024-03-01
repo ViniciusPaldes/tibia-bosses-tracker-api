@@ -47,8 +47,10 @@ const handler = async (event, context) => {
             body: JSON.stringify(graphData),
         };
     } catch (error) {
-        console.error('Error:', error);
-        res.status(500).json({ error: 'Internal server error' });
+      return {
+        statusCode: 500,
+        body: JSON.stringify(error),
+      };
     }
 
 };
