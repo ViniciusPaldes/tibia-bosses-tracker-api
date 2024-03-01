@@ -3,6 +3,7 @@ const express = require("express");
 const axios = require("axios");
 const cheerio = require("cheerio");
 const moment = require("moment");
+const { default: puppeteer } = require("puppeteer");
 
 // Create an instance of the Express application
 const app = express();
@@ -121,6 +122,37 @@ async function getGuildStatsBossList() {
     });
 
     return bossList;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return [];
+  }
+}
+
+async function getGuildStatsGraph(boss) {
+  try {
+    const encodedBossName = boss.split(" ").join("%20");
+    const url = `https://guildstats.eu/bosses?world=Venebra&monsterName=${encodedBossName}`;
+    
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+
+    await page.goto(url, { waitUntil: 'networkidle0' }); // Replace with your URL
+
+    const html = await page.content(); // This will get the entire page HTML
+
+
+    const $ = cheerio.load(html);
+    
+    const data = [];
+    $('div[aria-label="A tabular representation of the data in the chart."] table tbody tr').each((index, element) => {
+      const tds = $(element).find('td');
+      const daysAfter = parseInt($(tds[0]).text(), 10);
+      const chance = parseFloat($(tds[1]).text());
+      data.push({ daysAfter, chance });
+    });
+
+    return data;
+
   } catch (error) {
     console.error("Error fetching data:", error);
     return [];
@@ -301,6 +333,17 @@ app.get("/guild-stats", async (req, res) => {
   try {
     const bossList = await getGuildStatsBossList();
     res.json(bossList);
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.get("/guild-stats/:boss", async (req, res) => {
+  try {
+    const boss = req.params.boss;
+    const data = await getGuildStatsGraph(boss);
+    res.json(data);
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({ error: "Internal server error" });
