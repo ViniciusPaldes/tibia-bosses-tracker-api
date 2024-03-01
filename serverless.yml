@@ -1,0 +1,46 @@
+service: tibia-html-to-json-api
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+
+plugins:
+  - serverless-dotenv-plugin
+
+functions:
+  guild-stats-graph:
+    handler: functions/guild-stats-graph/handler.handler
+    events:
+      - http:
+          path: guild-stats-graph
+          method: get
+          request:
+            parameters:
+              querystrings:
+                boss: true
+  guild-stats:
+    handler: functions/guild-stats/handler.handler
+    events:
+      - http:
+          path: guild-stats
+          method: get
+  tibia-wiki-creatures:
+    handler: functions/tibia-wiki-creatures/handler.handler
+    events:
+      - http:
+          path: tibia-wiki-creatures
+          method: get
+  tibia-statistics:
+    handler: functions/tibia-statistics/handler.handler
+    events:
+      - http:
+          path: tibia-statistics
+          method: get
+  tibia-statistics-yesterday:
+    handler: functions/tibia-statistics-yesterday/handler.handler
+    events:
+      - http:
+          path: tibia-statistics-yesterday
+          method: get
+  # guild-stats-graph:
+  #   handler: functions/guild-stats-graph/handler.handler
