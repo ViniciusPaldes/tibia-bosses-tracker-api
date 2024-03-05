@@ -74,6 +74,18 @@ const getBossListKillStatistic = async () => {
   }
 };
 
+const bankRobbery = (name) => {
+  switch (name) {
+    case "Elvira Hammerthrust":
+    case "Robby the Reckless":
+    case "Jesse the Wicked":
+    case "Mornenion":
+      return true;
+    default:
+      return false;
+  }
+};
+
 async function getGuildStatsBossList() {
   try {
     const url =
@@ -109,7 +121,7 @@ async function getGuildStatsBossList() {
       }
 
       // Exclude bosses with chance -1 from the list
-      if (chanceText !== "-1") {
+      if (chanceText !== "-1" || bankRobbery(name)) {
         bossList.push({
           name,
           killedYesterday,
