@@ -82,6 +82,7 @@ const otherBosses = (name) => {
     case "Mornenion":
     case "Oodok Witchmaster":
     case "Arthom The Hunter":
+    case "Groam":
       return true;
     default:
       return false;

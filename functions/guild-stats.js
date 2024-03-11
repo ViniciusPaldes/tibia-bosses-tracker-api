@@ -2,12 +2,15 @@
 const axios = require("axios");
 const cheerio = require("cheerio");
 
-const bankRobbery = (name) => {
+const otherBosses = (name) => {
   switch (name) {
     case "Elvira Hammerthrust":
     case "Robby the Reckless":
     case "Jesse the Wicked":
     case "Mornenion":
+    case "Oodok Witchmaster":
+    case "Arthom The Hunter":
+    case "Groam":
       return true;
     default:
       return false;
@@ -48,7 +51,7 @@ async function getBossList() {
       }
 
       // Exclude bosses with chance -1 from the list
-      if (chanceText !== "-1" || bankRobbery(name)) {
+      if (chanceText !== "-1" || otherBosses(name)) {
         bossList.push({
           name,
           killedYesterday,
