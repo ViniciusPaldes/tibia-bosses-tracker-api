@@ -11,6 +11,8 @@ const otherBosses = (name) => {
     case "Oodok Witchmaster":
     case "Arthom The Hunter":
     case "Groam":
+    case "Yetis":
+    case "Midnight Panthers":
       return true;
     default:
       return false;
@@ -20,7 +22,7 @@ const otherBosses = (name) => {
 async function getBossList() {
   try {
     const url =
-      "https://guildstats.eu/bosses?world=Venebra&monsterName=&bossType=3&rook=0";
+      "https://guildstats.eu/bosses?world=Venebra&monsterName=&bossType=&rook=0";
 
     const response = await axios.get(url);
     const html = response.data;
