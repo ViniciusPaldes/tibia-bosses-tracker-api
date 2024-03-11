@@ -16,6 +16,7 @@ const otherBosses = (name) => {
     case "Undead Cavebears":
     case "Yackal":
     case "Grorlam":
+    case "Mahatheb":
       return true;
     default:
       return false;
