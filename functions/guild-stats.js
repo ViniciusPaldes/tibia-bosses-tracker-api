@@ -2,12 +2,21 @@
 const axios = require("axios");
 const cheerio = require("cheerio");
 
-const bankRobbery = (name) => {
+const otherBosses = (name) => {
   switch (name) {
     case "Elvira Hammerthrust":
     case "Robby the Reckless":
     case "Jesse the Wicked":
     case "Mornenion":
+    case "Oodok Witchmaster":
+    case "Arthom The Hunter":
+    case "Groam":
+    case "Yetis":
+    case "Midnight Panthers":
+    case "Undead Cavebears":
+    case "Yakchal":
+    case "Grorlam":
+    case "Mahatheb":
       return true;
     default:
       return false;
@@ -17,7 +26,7 @@ const bankRobbery = (name) => {
 async function getBossList() {
   try {
     const url =
-      "https://guildstats.eu/bosses?world=Venebra&monsterName=&bossType=3&rook=0";
+      "https://guildstats.eu/bosses?world=Venebra&monsterName=&bossType=&rook=0";
 
     const response = await axios.get(url);
     const html = response.data;
@@ -48,7 +57,7 @@ async function getBossList() {
       }
 
       // Exclude bosses with chance -1 from the list
-      if (chanceText !== "-1" || bankRobbery(name)) {
+      if (chanceText !== "-1" || otherBosses(name)) {
         bossList.push({
           name,
           killedYesterday,
