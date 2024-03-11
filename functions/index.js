@@ -87,6 +87,7 @@ const otherBosses = (name) => {
     case "Midnight Panthers":
     case "Undead Cavebears":
     case "Yackal":
+    case "Grorlam":
       return true;
     default:
       return false;
