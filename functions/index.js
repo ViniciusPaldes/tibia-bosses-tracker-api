@@ -89,6 +89,9 @@ const otherBosses = (name) => {
     case "Yakchal":
     case "Grorlam":
     case "Mahatheb":
+    case "The Manhunter":
+    case "The Hungerer":
+    case "The Mean Masher":
       return true;
     default:
       return false;
