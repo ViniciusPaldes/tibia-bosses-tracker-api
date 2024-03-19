@@ -128,7 +128,7 @@ async function getGuildStatsBossList() {
         chance = "0.01";
       } else {
         if (chanceText !== "-1") {
-          chance = chanceText.replace("%", "0");
+          chance = chanceText.replace("%", "");
           chance = chance / 100;
         }
       }
